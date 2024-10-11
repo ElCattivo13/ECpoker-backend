@@ -4,7 +4,7 @@ public class Player {
   
   private String name;
   
-  public Sting getName() {
+  public String getName() {
     return this.name;
   }
   

@@ -1,8 +1,11 @@
 package io.github.elcattivo13.ecpoker.model;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class PokerRegistry {
   
-  private Map<UUID, PokerSession> sessions = new HashMap<>();
+  private final Map<UUID, PokerSession> sessions = new HashMap<>();
   
   public void register(PokerSession session) {
     sessions.put(session.getSessionId(), session);
@@ -10,11 +13,11 @@ public class PokerRegistry {
   
   public long cleanup() {
     List<UUID> oldIds = sessions.entrySet().stream()
-        .filter(e -> e.valuem().isOld())
-        .map(e -> e.key())
-        .collect(Collectors.toList());
+        .filter(e -> e.getValue().isOld())
+        .map(Map.Entry::getKey)
+        .toList();
         
-    sessions.removeAll(oldIds);
+    oldIds.forEach(sessions::remove);
     
     return oldIds.size();
   }
